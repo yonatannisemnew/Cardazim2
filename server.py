@@ -18,7 +18,7 @@ def run_server(port, ip):
 
 
 def main():
-    run_server(5553, "127.0.0.1")
+    run_server(7777, "0.0.0.0")
 
 
 if __name__ == '__main__':

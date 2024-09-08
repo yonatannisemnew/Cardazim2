@@ -11,7 +11,7 @@ def send_data(server_ip, server_port, data):
     client_socket = socket.socket()  # instantiate
     client_socket.connect((server_ip, server_port))  # connect to the server
     en_data = data.encode()
-    size = sys.getsizeof(en_data)
+    size = len(en_data)
     en_size = struct.pack('<i', size)
     messege = en_size + en_data
     client_socket.send(messege)  # send message
@@ -46,7 +46,6 @@ def main():
     except Exception as error:
         print(f'ERROR: {error}')
         return 1
-
-
+    
 if __name__ == '__main__':
     main()
