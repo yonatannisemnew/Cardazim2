@@ -47,10 +47,5 @@ def main():
         print(f'ERROR: {error}')
         return 1
     
-def foo() :
-    ip = '172.20.10.3'
-    port = 1234
-    while True:
-        send_data(ip, port, "sddssdfffsdfdsffdsfsfdfdsfdsfjdsfijdshfshdfsfhsdfijdhfdijsfhdsjifhsdijfhdisjfhdsjifhsdihsdighsdijghdsjighsdijghjisghohsfoighdiofshgodfghosdhgosdfhgoidsfhgoidshgodsfighodisfghodfshgdsofghdsofhgoshgosifdhgoisfdhgoidfghoijsdghijodfhgiosfhgighdsfijoghgihdsoghoidfsgdhfgohgsdoghodshgdoifjghodsihgodshgosidhgsdfoig")
 if __name__ == '__main__':
     main()
