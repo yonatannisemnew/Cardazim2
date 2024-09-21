@@ -1,28 +1,15 @@
 import argparse
-import sys
 import socket
 import struct
+from connection import Connection
 
 
 def send_data(server_ip, server_port, data):
     '''
     Send data to server in address (server_ip, server_port).
     '''
-    client_socket = socket.socket()  # instantiate
-    client_socket.connect((server_ip, server_port))  # connect to the server
-    en_data = data.encode()
-    size = len(en_data)
-    en_size = struct.pack('<i', size)
-    messege = en_size + en_data
-    client_socket.send(messege)  # send message
-    client_socket.close()  # close the connection
-
-
-###########################################################
-##################### END OF YOUR CODE ####################
-###########################################################
-
-
+    with Connection.connect(server_ip, server_port) as conn:
+        conn.send_message(data.encode())
 def get_args():
     parser = argparse.ArgumentParser(description='Send data to server.')
     parser.add_argument('server_ip', type=str,
@@ -46,6 +33,7 @@ def main():
     except Exception as error:
         print(f'ERROR: {error}')
         return 1
-    
+
+
 if __name__ == '__main__':
     main()
