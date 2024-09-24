@@ -1,5 +1,5 @@
 import socket
-import struct
+from card import Card
 class Connection:
     def __init__(self, connection: socket.socket):
         self.sock = connection
@@ -10,22 +10,21 @@ class Connection:
         #neads to find the client port
         return r_string
 
-    def send_message(self, message:bytes):
+    def send_message(self, card: Card):
 
-        m_len = len(message)
-        en_len = struct.pack('<i', m_len)
-        self.sock.send(en_len + message)
+        self.sock.send(card.serialize())
 
     def receive_message(self):
 
-        en_leangth = self.sock.recv(4)
-        leangth = struct.unpack('<i', en_leangth)
-        en_messege = self.sock.recv(leangth[0])
-        messege = en_messege.decode()
-        print(self)
-        self.close()
-        return messege
+        serialized = b''
+        while True:
+            data = self.sock.recv(1024)
+            serialized+=data
+            if not data:
+                break
 
+        self.close()
+        return Card.deserialize(serialized)
 
     @classmethod
     def connect(cls, ip, port):
