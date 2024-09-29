@@ -1,4 +1,5 @@
 import socket
+import struct
 from card import Card
 class Connection:
     def __init__(self, connection: socket.socket):
@@ -10,21 +11,27 @@ class Connection:
         #neads to find the client port
         return r_string
 
-    def send_message(self, card: Card):
+    def send_message(self, data):
 
-        self.sock.send(card.serialize())
+        self.sock.send(data)
 
     def receive_message(self):
 
-        serialized = b''
+        recived = b''
         while True:
             data = self.sock.recv(1024)
-            serialized+=data
+            recived+=data
             if not data:
                 break
-
         self.close()
-        return Card.deserialize(serialized)
+        try:
+            return Card.deserialize(recived)
+        except:
+            try:
+                return recived.decode()
+            except:
+                print("returning bytes, unknown message")
+                return recived
 
     @classmethod
     def connect(cls, ip, port):
