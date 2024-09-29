@@ -20,7 +20,7 @@ class CryptImage:
 
     def convert_to_bytes(self):
         width, hight = self.image.size
-        return width.to_bytes(4) + hight.to_bytes(4) + self.image.tobytes() + int.from_bytes(self.key_hash).to_bytes(32)
+        return width.to_bytes(4) + hight.to_bytes(4) + self.image.tobytes() + self.key_hash.ljust(32, b'\x00')
 
 
 
