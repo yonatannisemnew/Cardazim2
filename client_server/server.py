@@ -2,13 +2,13 @@
 import threading
 from listener import Listener
 from card import Card
-from CardManager import CardManager
+from CardManager import Saver
 
 
 def save_to_database(card: Card):
     print("Received card.")
-    manager = CardManager('./database')
-    manager.save(card)
+    manager = Saver('filesystem', 'images')
+    manager.Save(card)
     print(f"Saved card to path ./database/{card.creator}/{card.name}")
 def run_server(port, ip):
     with Listener("127.0.0.1", 8745) as listener:
